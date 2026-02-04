@@ -18,7 +18,7 @@ function ScrollToTop() {
 
 function WebsiteContent({ isBannerVisible }: { isBannerVisible: boolean }) {
   const location = useLocation();
-  const isHomePage = location.pathname === '/' || location.pathname === '/apple-tree-tots/';
+  const isHomePage = location.pathname === '/';
 
   // Add padding on non-home pages to account for fixed navbar + banner
   // pt-40 when banner is visible, pt-20 when banner is closed
@@ -78,7 +78,7 @@ export function App() {
 // Wrapper component for Router
 export function AppWithRouter() {
   return (
-    <Router basename="/apple-tree-tots/">
+    <Router basename="/">
       <App />
     </Router>
   );
