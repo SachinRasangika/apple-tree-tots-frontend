@@ -159,7 +159,7 @@ export function PackagesPage() {
         <PageHeroSection
           title="PACKAGES"
           description="Choose the program that best fits your child's developmental stage and your family's needs. All packages include our Montessori curriculum, qualified teachers, and nurturing environment."
-          imageUrl="/apple-tree-tots/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png"
+          imageUrl="/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png"
           imageAlt="Class packages"
         />
 

@@ -9,10 +9,10 @@ export function JoinTeamSection() {
         {/* Right: Image */}
         <div className="relative order-1 lg:order-2">
           <div className="aspect-[4/3] overflow-hidden rounded-lg relative group">
-            <img src="/apple-tree-tots/images/campus/Gemini_Generated_Image_6fd08v6fd08v6fd0.png" alt="Teacher with children" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
+            <img src={encodeURI("/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png")} alt="Apple Tree Tots Team" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
 
             {/* Overlay Badge */}
-            <div className="absolute top-8 left-8 bg-[#2d5555]/20 border border-[#2d5555]/40 rounded-lg px-6 py-3 z-20 backdrop-blur-sm">
+            <div className="absolute top-8 left-8 bg-[#CDD1CB]/90 border border-[#2A372F]/20 rounded-lg px-6 py-3 z-20 backdrop-blur-sm">
               <span className="text-xs tracking-wide uppercase text-[#2A372F] font-semibold">
                 Now Hiring
               </span>

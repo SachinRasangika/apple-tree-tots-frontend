@@ -48,7 +48,7 @@ export function FoundersSection() {
         {/* Feature 1: Play-Based Learning */}
         <div className="group">
           <div className="aspect-square overflow-hidden rounded-lg mb-6">
-            <img src="https://images.pexels.com/photos/8618062/pexels-photo-8618062.jpeg" alt="Children learning through play and interaction" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+            <img src="/images/apple-tree-tots-images/play.png" alt="Children engaged in play activities" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
           </div>
           <h3 className="text-lg font-semibold text-[#2A372F] mb-3">
             Learning Through Play
@@ -61,7 +61,7 @@ export function FoundersSection() {
         {/* Feature 2: Creative Spaces */}
         <div className="group">
           <div className="aspect-square overflow-hidden rounded-lg mb-6">
-            <img src="https://images.pexels.com/photos/9534281/pexels-photo-9534281.jpeg" alt="Colorful creative art and handprints" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+            <img src="/images/apple-tree-tots-images/creative.png" alt="Creative learning environment" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
           </div>
           <h3 className="text-lg font-semibold text-[#2A372F] mb-3">
             Creative Spaces
@@ -74,7 +74,7 @@ export function FoundersSection() {
         {/* Feature 3: Caring Teachers */}
         <div className="group">
           <div className="aspect-square overflow-hidden rounded-lg mb-6">
-            <img src="https://images.pexels.com/photos/8617899/pexels-photo-8617899.jpeg" alt="Caring teacher with happy children" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+            <img src="/images/apple-tree-tots-images/teaching.png" alt="Teaching and learning moments" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
           </div>
           <h3 className="text-lg font-semibold text-[#2A372F] mb-3">
             Caring Professionals
@@ -92,7 +92,7 @@ export function FoundersSection() {
             {/* Feature 1: Play-Based Learning */}
             <div className="flex-shrink-0 w-full px-2 group">
               <div className="aspect-square overflow-hidden rounded-lg mb-6">
-                <img src="https://images.pexels.com/photos/8618062/pexels-photo-8618062.jpeg" alt="Children learning through play and interaction" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+                <img src="/images/apple-tree-tots-images/play.png" alt="Children engaged in play activities" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
               </div>
               <h3 className="text-lg font-semibold text-[#2A372F] mb-3">
                 Learning Through Play
@@ -105,7 +105,7 @@ export function FoundersSection() {
             {/* Feature 2: Creative Spaces */}
             <div className="flex-shrink-0 w-full px-2 group">
               <div className="aspect-square overflow-hidden rounded-lg mb-6">
-                <img src="https://images.pexels.com/photos/9534281/pexels-photo-9534281.jpeg" alt="Colorful creative art and handprints" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+                <img src="/images/apple-tree-tots-images/creative.png" alt="Creative learning environment" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
               </div>
               <h3 className="text-lg font-semibold text-[#2A372F] mb-3">
                 Creative Spaces
@@ -118,7 +118,7 @@ export function FoundersSection() {
             {/* Feature 3: Caring Teachers */}
             <div className="flex-shrink-0 w-full px-2 group">
               <div className="aspect-square overflow-hidden rounded-lg mb-6">
-                <img src="https://images.pexels.com/photos/8617899/pexels-photo-8617899.jpeg" alt="Caring teacher with happy children" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
+                <img src="/images/apple-tree-tots-images/teaching.png" alt="Teaching and learning moments" className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
               </div>
               <h3 className="text-lg font-semibold text-[#2A372F] mb-3">
                 Caring Professionals

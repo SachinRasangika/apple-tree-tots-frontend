@@ -83,8 +83,9 @@ export function EnrollmentOfficeSection() {
                 <p className="uppercase tracking-widest font-medium mb-1 text-[#2A372F]">
                   Get in Touch
                 </p>
-                <p className="text-[#2A372F]/70">074 343 1488</p>
-                <p className="text-[#2A372F]/70">@apple_tree_tots_preschool</p>
+                <a href="tel:+94776996403" className="text-[#2A372F]/70 hover:text-[#2A372F] transition-colors block">+94 77 699 6403</a>
+                <a href="tel:+94743431488" className="text-[#2A372F]/70 hover:text-[#2A372F] transition-colors block">074 343 1488</a>
+                <a href="https://instagram.com/apple_tree_tots_preschool" target="_blank" rel="noopener noreferrer" className="text-[#2A372F]/70 hover:text-[#2A372F] transition-colors block">@apple_tree_tots_preschool</a>
               </div>
             </div>
           </div>
@@ -139,7 +140,7 @@ export function EnrollmentOfficeSection() {
 
             {/* Visual Image */}
             <div className="relative h-full min-h-[300px] order-1 md:order-2 group overflow-hidden rounded-lg">
-              <img src="/apple-tree-tots/images/testimonials/Gemini_Generated_Image_i6bhti6bhti6bhti.png" alt="Admissions Office" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
+              <img src={encodeURI("/images/testimonials/Gemini_Generated_Image_i6bhti6bhti6bhti.png")} alt="Admissions Office" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#2A372F] to-transparent p-6 z-20">
                 <span className="text-[10px] tracking-wide uppercase text-white/80 font-semibold">
                   Admissions Office
@@ -152,7 +153,7 @@ export function EnrollmentOfficeSection() {
           <div className="lg:hidden flex flex-col gap-8">
             {/* Visual Image - Top on mobile */}
             <div className="relative h-64 group overflow-hidden rounded-lg">
-              <img src="/apple-tree-tots/images/testimonials/Gemini_Generated_Image_i6bhti6bhti6bhti.png" alt="Admissions Office" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
+              <img src={encodeURI("/images/testimonials/Gemini_Generated_Image_i6bhti6bhti6bhti.png")} alt="Admissions Office" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#2A372F] to-transparent p-6 z-20">
                 <span className="text-[10px] tracking-wide uppercase text-white/80 font-semibold">
                   Admissions Office

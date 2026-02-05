@@ -115,17 +115,17 @@ export function PricingSection() {
     setCurrentSlide((prev) => (prev - 1 + pricingTiers.length) % pricingTiers.length);
   };
 
-  return <AnimatedSection className="py-20 block" animation="fade-in-up">
+  return <AnimatedSection className="py-20 block bg-[#2d4a4a]" animation="fade-in-up">
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-20">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs tracking-wide uppercase text-[#2d5555] font-semibold mb-4 block">
+          <span className="text-xs tracking-wide uppercase text-white/80 font-semibold mb-4 block">
             Investment in Excellence
           </span>
-          <h2 className="text-3xl md:text-4xl font-serif tracking-widest uppercase mb-6 text-[#2A372F]">
+          <h2 className="text-3xl md:text-4xl font-serif tracking-widest uppercase mb-6 text-white">
             Our <span className="italic opacity-80">Programs</span>
           </h2>
-          <p className="text-sm text-[#2A372F]/70 font-light leading-relaxed">
+          <p className="text-sm text-white/70 font-light leading-relaxed">
             Choose the program that best fits your child's needs and your
             family's schedule. All programs include our Montessori curriculum,
             qualified teachers, and nurturing environment.
@@ -149,7 +149,7 @@ export function PricingSection() {
             {/* Arrow Buttons */}
             <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#2A372F]/30 hover:bg-[#2A372F]/50 text-[#2A372F] rounded-full p-2 transition-all duration-200 z-10"
+              className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white rounded-full p-2 transition-all duration-200 z-10"
               aria-label="Previous slide"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -158,7 +158,7 @@ export function PricingSection() {
             </button>
             <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 bg-[#2A372F]/30 hover:bg-[#2A372F]/50 text-[#2A372F] rounded-full p-2 transition-all duration-200 z-10"
+              className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white rounded-full p-2 transition-all duration-200 z-10"
               aria-label="Next slide"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,7 +173,7 @@ export function PricingSection() {
                 key={index}
                 onClick={() => setCurrentSlide(index)}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === index ? 'bg-[#2A372F] w-8' : 'bg-[#2A372F]/30 w-2 hover:bg-[#2A372F]/50'
+                  currentSlide === index ? 'bg-white w-8' : 'bg-white/30 w-2 hover:bg-white/50'
                 }`}
                 aria-label={`Go to pricing tier ${index + 1}`}
               />)}
@@ -181,11 +181,11 @@ export function PricingSection() {
         </div>
 
         {/* Additional Info */}
-        <div className="bg-[#CDD1CB]/95 border border-[#2A372F]/20 rounded-2xl p-8 text-center shadow-md">
-          <h3 className="text-lg font-semibold text-[#2A372F] mb-4">
+        <div className="bg-white/10 border border-white/20 rounded-2xl p-8 text-center shadow-md">
+          <h3 className="text-lg font-semibold text-white mb-4">
             Sibling Discounts Available
           </h3>
-          <p className="text-sm text-[#2A372F]/70 font-light mb-8 max-w-2xl mx-auto">
+          <p className="text-sm text-white/70 font-light mb-8 max-w-2xl mx-auto">
             We offer 10% discount for the second child and 15% for the third
             child when multiple siblings are enrolled simultaneously. Contact us
             to learn more about our flexible payment options.

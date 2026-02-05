@@ -5,7 +5,7 @@ export function StatementSection() {
   return <div
     className="w-full min-h-screen flex flex-col items-center justify-center px-6 md:px-12 lg:px-20 relative overflow-hidden py-20 md:py-32"
   >
-    <img src="/apple-tree-tots/images/gallery/Gemini_Generated_Image_gy7zfkgy7zfkgy7z.png" alt="Background" className="absolute inset-0 w-full h-full object-cover" />
+    <img src={encodeURI("/images/gallery/Gemini_Generated_Image_gy7zfkgy7zfkgy7z.png")} alt="Background" className="absolute inset-0 w-full h-full object-cover" />
     <div className="absolute inset-0 bg-black/35"></div>
     <div className="relative z-10 text-center max-w-4xl mx-auto space-y-8">
       {/* Vision Label */}

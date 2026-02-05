@@ -5,51 +5,51 @@ export function InteriorGallery() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const allImages = [{
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8433 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8433 03.16.45.jpg',
     alt: 'Apple Tree Tots classroom',
     className: 'col-span-1 md:col-span-2 row-span-2'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8434 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8434 03.16.45.jpg',
     alt: 'Children learning activity',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8435 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8435 03.16.45.jpg',
     alt: 'Preschool environment',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8436 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8436 03.16.45.jpg',
     alt: 'Apple Tree Tots facilities',
     className: 'col-span-1 md:col-span-2 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8439 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8439 03.16.45.jpg',
     alt: 'Learning spaces',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8440 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8440 03.16.45.jpg',
     alt: 'Indoor activities and learning',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8441 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8441 03.16.45.jpg',
     alt: 'Play and development area',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8443 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8443 03.16.45.jpg',
     alt: 'Creative learning space',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8444 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8444 03.16.45.jpg',
     alt: 'Student engagement',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8445 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8445 03.16.45.jpg',
     alt: 'Preschool activities',
     className: 'col-span-1 md:col-span-2 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8454 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8454 03.16.45.jpg',
     alt: 'Outdoor learning',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }, {
-    url: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8456 03.16.45.jpg',
+    url: '/images/apple-tree-tots-images/IMG_8456 03.16.45.jpg',
     alt: 'Children playing',
     className: 'col-span-1 md:col-span-1 row-span-1'
   }];
@@ -84,7 +84,7 @@ export function InteriorGallery() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-8 auto-rows-[200px] md:auto-rows-[300px]">
         {images.map((img, idx) => <div key={idx} className={`relative group overflow-hidden rounded-lg ${img.className}`}>
-            <img src={img.url} alt={img.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <img src={encodeURI(img.url)} alt={img.alt} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
               <span className="text-xs uppercase tracking-wide border border-white px-4 py-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 View Gallery

@@ -73,7 +73,7 @@ export function AdmissionsPage() {
         <PageHeroSection
           title="ADMISSIONS"
           description="We're delighted you're considering Apple Tree Tots for your child's early education. Our admissions process is designed to be straightforward and welcoming. Let's begin this journey together."
-          imageUrl="/apple-tree-tots/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png"
+          imageUrl="/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png"
           imageAlt="Admissions welcome"
           buttonLabel="Start Application"
           onButtonClick={() => navigate('/application')}

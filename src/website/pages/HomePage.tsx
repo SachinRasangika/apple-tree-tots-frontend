@@ -13,7 +13,6 @@ import {
   InstagramSection,
   PricingSection,
   JoinTeamSection,
-  AddressSection,
   EnrollmentOfficeSection,
   Footer,
   FloatingActionBar,
@@ -39,7 +38,6 @@ export function HomePage() {
         <InstagramSection />
         <PricingSection />
         <JoinTeamSection />
-        <AddressSection />
         <EnrollmentOfficeSection />
       </main>
       <Footer />

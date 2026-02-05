@@ -30,23 +30,23 @@ export function ContactPage() {
         <PageHeroSection
           title="CONTACT"
           description="We'd love to hear from you. Whether you're interested in enrolling your child, scheduling a campus tour, or have questions about our programs, our team is here to help."
-          imageUrl="/apple-tree-tots/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png"
+          imageUrl="/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png"
           imageAlt="Contact us"
         />
 
         {/* Contact Methods Grid */}
         <section className="max-w-[1400px] mx-auto mb-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <a href="tel:0743431488" className="group bg-[#CDD1CB]/95 border border-[#2A372F]/20 p-8 rounded-2xl hover:shadow-md transition-all duration-300 opacity-0 animate-[fadeInUp_0.7s_ease-out_forwards]">
+            <a href="tel:+94776996403" className="group bg-[#CDD1CB]/95 border border-[#2A372F]/20 p-8 rounded-2xl hover:shadow-md transition-all duration-300 opacity-0 animate-[fadeInUp_0.7s_ease-out_forwards]">
               <Phone className="w-8 h-8 text-[#2A372F] mb-4 group-hover:text-[#2A372F] transition-colors duration-300" />
               <h3 className="text-sm font-serif tracking-wide mb-2 group-hover:text-[#2A372F] transition-colors duration-300">
                 Call Us
               </h3>
               <p className="text-xs text-[#2A372F]/70 font-light leading-relaxed group-hover:text-[#2A372F] transition-colors duration-300">
-                074 343 1488
+                +94 77 699 6403
               </p>
               <p className="text-[10px] text-[#2A372F]/60 mt-2 group-hover:text-[#2A372F]/60 transition-colors duration-300">
-                Mon - Fri: 9:00 - 17:00
+                Primary contact
               </p>
             </a>
 

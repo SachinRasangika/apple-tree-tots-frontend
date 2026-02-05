@@ -12,7 +12,6 @@ import { DailyRoutineSection } from '../components/DailyRoutineSection';
 import { InstagramSection } from '../components/InstagramSection';
 import { PricingSection } from '../components/PricingSection';
 import { JoinTeamSection } from '../components/JoinTeamSection';
-import { AddressSection } from '../components/AddressSection';
 import { EnrollmentOfficeSection } from '../components/EnrollmentOfficeSection';
 import { Footer } from '../components/Footer';
 import { FloatingActionBar } from '../components/FloatingActionBar';
@@ -37,7 +36,6 @@ export function HomePage() {
         <InstagramSection />
         <PricingSection />
         <JoinTeamSection />
-        <AddressSection />
         <EnrollmentOfficeSection />
       </main>
       <Footer />

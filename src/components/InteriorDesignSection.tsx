@@ -1,5 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AnimatedSection } from './AnimatedSection';
+
+// Standardized image path constant
+const BASE_IMAGE_PATH = '/images/apple-tree-tots-images';
+
+// Shuffle function to randomize image order
+const shuffleArray = (array: any[]) => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
 
 export function InteriorDesignSection() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -7,28 +20,89 @@ export function InteriorDesignSection() {
   const [touchEnd, setTouchEnd] = useState(0);
   const [fullscreenIndex, setFullscreenIndex] = useState<number | null>(null);
 
-  const images = [
+  const allImages = [
+    // Original JPG Images
     {
-      src: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8433 03.16.45.jpg',
+      src: `${BASE_IMAGE_PATH}/IMG_8433 03.16.45.jpg`,
       alt: 'Bright classroom with learning materials'
     },
     {
-      src: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8434 03.16.45.jpg',
+      src: `${BASE_IMAGE_PATH}/IMG_8434 03.16.45.jpg`,
       alt: 'Outdoor learning and nature exploration'
     },
     {
-      src: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8435 03.16.45.jpg',
+      src: `${BASE_IMAGE_PATH}/IMG_8435 03.16.45.jpg`,
       alt: 'Campus facilities and spaces'
     },
     {
-      src: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8437 03.16.45.jpg',
+      src: `${BASE_IMAGE_PATH}/IMG_8436 03.16.45.jpg`,
+      alt: 'Learning through play and discovery'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/IMG_8437 03.16.45.jpg`,
       alt: 'Teacher engagement with children'
     },
     {
-      src: '/apple-tree-tots/images/apple-tree-tots-images/IMG_8439 03.16.45.jpg',
+      src: `${BASE_IMAGE_PATH}/IMG_8439 03.16.45.jpg`,
       alt: 'Happy children and families'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/IMG_8440 03.16.45.jpg`,
+      alt: 'Creative learning spaces'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/IMG_8441 03.16.45.jpg`,
+      alt: 'Interactive educational activities'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/IMG_8443 03.16.45.jpg`,
+      alt: 'Safe play environment'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/IMG_8444 03.16.45.jpg`,
+      alt: 'Student engagement and learning'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/IMG_8445 03.16.45.jpg`,
+      alt: 'Nature-based learning experiences'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/IMG_8454 03.16.45.jpg`,
+      alt: 'Outdoor exploration and growth'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/IMG_8456 03.16.45.jpg`,
+      alt: 'Children playing and developing'
+    },
+    // Additional PNG Images
+    {
+      src: `${BASE_IMAGE_PATH}/11.png`,
+      alt: 'Classroom learning space'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/123.png`,
+      alt: 'Educational activities and facilities'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/img1 1.png`,
+      alt: 'Apple Tree Tots facility'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/img2 1.png`,
+      alt: 'Student activities and engagement'
+    },
+    {
+      src: `${BASE_IMAGE_PATH}/img3 1.png`,
+      alt: 'Learning space design'
     }
   ];
+
+  const [images, setImages] = useState(allImages);
+
+  // Shuffle images on component mount
+  useEffect(() => {
+    setImages(shuffleArray(allImages));
+  }, []);
 
   const handleTouchStart = (e) => {
     setTouchStart(e.targetTouches[0].clientX);
@@ -42,20 +116,20 @@ export function InteriorDesignSection() {
   const handleSwipe = () => {
     if (touchStart - touchEnd > 50) {
       // Swiped left
-      setCurrentSlide((prev) => (prev + 1) % 5);
+      setCurrentSlide((prev) => (prev + 1) % images.length);
     }
     if (touchEnd - touchStart > 50) {
       // Swiped right
-      setCurrentSlide((prev) => (prev - 1 + 5) % 5);
+      setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
     }
   };
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % 5);
+    setCurrentSlide((prev) => (prev + 1) % images.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + 5) % 5);
+    setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
   };
 
   const handleFullscreenPrev = () => {
@@ -95,7 +169,7 @@ export function InteriorDesignSection() {
               onClick={() => setFullscreenIndex(0)}
               className="md:col-span-3 aspect-[3/4] overflow-hidden cursor-pointer group"
             >
-              <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={encodeURI(images[0].src)} alt={images[0].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                 <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
@@ -108,7 +182,7 @@ export function InteriorDesignSection() {
               onClick={() => setFullscreenIndex(1)}
               className="md:col-span-3 aspect-[3/4] overflow-hidden cursor-pointer group relative"
             >
-              <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={encodeURI(images[1].src)} alt={images[1].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                 <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
@@ -131,7 +205,7 @@ export function InteriorDesignSection() {
               onClick={() => setFullscreenIndex(2)}
               className="md:col-span-3 aspect-[3/4] overflow-hidden cursor-pointer group relative"
             >
-              <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={encodeURI(images[2].src)} alt={images[2].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                 <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
@@ -154,7 +228,7 @@ export function InteriorDesignSection() {
               onClick={() => setFullscreenIndex(3)}
               className="md:col-span-3 aspect-[3/4] overflow-hidden cursor-pointer group relative"
             >
-              <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={encodeURI(images[3].src)} alt={images[3].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                 <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
@@ -167,7 +241,7 @@ export function InteriorDesignSection() {
               onClick={() => setFullscreenIndex(4)}
               className="md:col-span-3 aspect-[3/4] overflow-hidden cursor-pointer group relative"
             >
-              <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src={encodeURI(images[4].src)} alt={images[4].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
                 <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
@@ -179,71 +253,30 @@ export function InteriorDesignSection() {
             <div className="hidden md:block md:col-span-3">
               <div className="h-full flex items-end justify-end pb-2">
                 <span className="text-xs tracking-wider opacity-80">
-                  Photography: Sien Koolen
+                  Photography: Pasindu Himantha
                 </span>
               </div>
             </div>
           </div>
 
           {/* Mobile Carousel with Pagination & Arrows */}
-          <div className="md:hidden mb-4">
-            <div className="relative overflow-hidden" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-              <div className="flex transition-transform duration-300" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
-                <button
-                  onClick={() => setFullscreenIndex(0)}
-                  className="flex-shrink-0 w-full aspect-[3/4] overflow-hidden px-2 cursor-pointer group relative"
-                >
-                  <img src={images[0].src} alt={images[0].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
-                    </svg>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setFullscreenIndex(1)}
-                  className="flex-shrink-0 w-full aspect-[3/4] overflow-hidden px-2 cursor-pointer group relative"
-                >
-                  <img src={images[1].src} alt={images[1].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
-                    </svg>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setFullscreenIndex(2)}
-                  className="flex-shrink-0 w-full aspect-[3/4] overflow-hidden px-2 cursor-pointer group relative"
-                >
-                  <img src={images[2].src} alt={images[2].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
-                    </svg>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setFullscreenIndex(3)}
-                  className="flex-shrink-0 w-full aspect-[3/4] overflow-hidden px-2 cursor-pointer group relative"
-                >
-                  <img src={images[3].src} alt={images[3].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
-                    </svg>
-                  </div>
-                </button>
-                <button
-                  onClick={() => setFullscreenIndex(4)}
-                  className="flex-shrink-0 w-full aspect-[3/4] overflow-hidden px-2 cursor-pointer group relative"
-                >
-                  <img src={images[4].src} alt={images[4].alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
-                    </svg>
-                  </div>
-                </button>
+          <div className="md:hidden mb-4 w-full">
+            <div className="relative w-full overflow-hidden" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+              <div className="flex flex-nowrap transition-transform duration-300" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                {images.map((image, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setFullscreenIndex(idx)}
+                    className="flex-shrink-0 w-full aspect-[3/4] overflow-hidden cursor-pointer group relative"
+                  >
+                    <img src={encodeURI(image.src)} alt={image.alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
+                      <svg className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 13H7" />
+                      </svg>
+                    </div>
+                  </button>
+                ))}
               </div>
 
               {/* Arrow Buttons */}
@@ -269,48 +302,23 @@ export function InteriorDesignSection() {
 
             {/* Pagination Dots */}
             <div className="flex justify-center gap-2 mt-4">
-              <button
-                onClick={() => setCurrentSlide(0)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === 0 ? 'bg-white w-8' : 'bg-white/50 w-2 hover:bg-white/70'
-                }`}
-                aria-label="Gallery image 1"
-              />
-              <button
-                onClick={() => setCurrentSlide(1)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === 1 ? 'bg-white w-8' : 'bg-white/50 w-2 hover:bg-white/70'
-                }`}
-                aria-label="Gallery image 2"
-              />
-              <button
-                onClick={() => setCurrentSlide(2)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === 2 ? 'bg-white w-8' : 'bg-white/50 w-2 hover:bg-white/70'
-                }`}
-                aria-label="Gallery image 3"
-              />
-              <button
-                onClick={() => setCurrentSlide(3)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === 3 ? 'bg-white w-8' : 'bg-white/50 w-2 hover:bg-white/70'
-                }`}
-                aria-label="Gallery image 4"
-              />
-              <button
-                onClick={() => setCurrentSlide(4)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === 4 ? 'bg-white w-8' : 'bg-white/50 w-2 hover:bg-white/70'
-                }`}
-                aria-label="Gallery image 5"
-              />
+              {images.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    currentSlide === idx ? 'bg-white w-8' : 'bg-white/50 w-2 hover:bg-white/70'
+                  }`}
+                  aria-label={`Gallery image ${idx + 1}`}
+                />
+              ))}
             </div>
           </div>
 
           {/* Mobile Credits (visible only on small screens) */}
           <div className="flex justify-between md:hidden mt-4 text-xs opacity-80">
             <span>Apple Tree Tots</span>
-            <span>Photography: Sien Koolen</span>
+            <span>Photography: Pasindu Himantha</span>
           </div>
         </div>
       </div>
@@ -337,7 +345,7 @@ export function InteriorDesignSection() {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={images[fullscreenIndex].src}
+              src={encodeURI(images[fullscreenIndex].src)}
               alt={images[fullscreenIndex].alt}
               className="w-full h-full object-contain"
             />

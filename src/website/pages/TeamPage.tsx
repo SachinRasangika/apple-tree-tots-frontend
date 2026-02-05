@@ -16,14 +16,14 @@ const teamMembers: TeamMember[] = [{
   bio: 'With a degree in Early Childhood Education and extensive experience, Priya leads our teaching team with expertise in Montessori methodology and child development. She creates a nurturing environment where children thrive and develop a genuine love for learning.',
   qualifications: 'Degree in Early Childhood Education, Montessori Certification',
   specialization: 'Montessori Methodology, Child Development',
-  image: '/apple-tree-tots/images/team/IMG_8118.JPG'
+  image: '/images/team/IMG_8118.JPG'
 }, {
   name: 'SARAH MITCHELL',
   role: 'Senior Teacher',
   bio: 'A native English speaker with ECE certification, Sarah brings international teaching experience and a passion for language immersion education. Her warm approach helps children develop confidence in English communication.',
   qualifications: 'ECE Certification, TESOL Diploma',
   specialization: 'English Language Immersion, International Curriculum',
-  image: '/apple-tree-tots/images/team/IMG_8163.JPG'
+  image: '/images/team/IMG_8163.JPG'
 }];
 function TeacherModal({
   teacher,
@@ -109,7 +109,7 @@ export function TeamPage() {
         <PageHeroSection
           title="TEACHERS"
           description="We are most grateful for our teacher team. Let them carry you along and inspire you. Each educator brings unique expertise and passion to nurturing your child's development."
-          imageUrl="/apple-tree-tots/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png"
+          imageUrl="/images/gallery/Gemini_Generated_Image_dcqagmdcqagmdcqa.png"
           imageAlt="Teacher in peaceful setting"
           buttonLabel="Join with Us"
           onButtonClick={() => {

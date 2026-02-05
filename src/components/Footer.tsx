@@ -7,12 +7,18 @@ export function Footer() {
         {/* Newsletter */}
         <div className="mb-20 max-w-md">
           <h3 className="text-xs font-bold tracking-widest uppercase mb-6">
-            Follow us on Instagram:
+            Follow us:
           </h3>
-          <a href="https://instagram.com/apple_tree_tots_preschool" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:text-[#2d5555] transition-colors mb-8">
-            <Instagram size={20} />
-            <span>@apple_tree_tots_preschool</span>
-          </a>
+          <div className="space-y-3 mb-8">
+            <a href="https://instagram.com/apple_tree_tots_preschool" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:text-[#2d5555] transition-colors">
+              <Instagram size={20} />
+              <span>@apple_tree_tots_preschool</span>
+            </a>
+            <a href="https://www.facebook.com/share/1FiyQaMcun/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:text-[#2d5555] transition-colors">
+              <Facebook size={20} />
+              <span>Apple Tree Tots</span>
+            </a>
+          </div>
           <p className="text-xs text-gray-400 font-light leading-relaxed mb-6">
             Stay updated with daily activities, events, and announcements from
             our preschool community.
@@ -42,7 +48,15 @@ export function Footer() {
               <li>Apple Tree Tots Preschool</li>
               <li>Ahangama, Galle District</li>
               <li>Southern Province, Sri Lanka</li>
-              <li>074 343 1488</li>
+              <li>
+                <a href="tel:+94776996403" className="hover:text-white transition-colors">+94 77 699 6403</a>
+              </li>
+              <li>
+                <a href="tel:+94743431488" className="hover:text-white transition-colors">074 343 1488</a>
+              </li>
+              <li>
+                <a href="https://instagram.com/apple_tree_tots_preschool" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">@apple_tree_tots_preschool</a>
+              </li>
             </ul>
           </div>
 

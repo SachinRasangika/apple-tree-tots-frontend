@@ -13,7 +13,7 @@ export function CTABox({
   primaryText = 'Follow Instagram',
   secondaryText = 'Call Us',
   primaryHref = 'https://instagram.com/apple_tree_tots_preschool',
-  secondaryHref = 'tel:+94743431488',
+  secondaryHref = 'tel:+94776996403',
   showPhoneIcon = true
 }: CTABoxProps) {
   return (

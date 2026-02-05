@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Phone, X } from 'lucide-react';
 
 const PHONE_NUMBERS = [
+  { country: 'Sri Lanka', number: '+94 77 699 6403', tel: '+94776996403' },
   { country: 'Sri Lanka', number: '+94 74 343 1488', tel: '+94743431488' },
   { country: 'UK', number: '+44 7588 828866', tel: '+447588828866' },
   { country: 'Sri Lanka', number: '+94 75 780 0822', tel: '+94757800822' },

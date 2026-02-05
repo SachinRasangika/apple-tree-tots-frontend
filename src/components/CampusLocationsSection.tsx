@@ -75,7 +75,7 @@ export function CampusLocationsSection() {
     postal: 'Galle District, Southern Province',
     phone: '074 343 1488',
     hours: 'Mon - Fri: 07:30 - 18:00',
-    image: '/apple-tree-tots/images/hero/homehero.png',
+    image: '/images/hero/homehero.png',
     delay: '0ms'
   }];
   return <section className="py-20 px-6 md:px-12 lg:px-20 max-w-[1400px] mx-auto">

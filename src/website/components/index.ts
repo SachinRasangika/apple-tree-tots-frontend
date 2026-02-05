@@ -20,7 +20,6 @@ export { DailyRoutineSection } from '../../components/DailyRoutineSection';
 export { InstagramSection } from '../../components/InstagramSection';
 export { PricingSection } from '../../components/PricingSection';
 export { JoinTeamSection } from '../../components/JoinTeamSection';
-export { AddressSection } from '../../components/AddressSection';
 export { EnrollmentOfficeSection } from '../../components/EnrollmentOfficeSection';
 export { EventBanner } from '../../components/EventBanner';
 export { FloatingActionBar } from '../../components/FloatingActionBar';

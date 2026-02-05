@@ -2,28 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { MapPin } from 'lucide-react';
 
 const HERO_IMAGES = [
-  'images/apple-tree-tots-images/IMG_8433 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8437 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8439 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8440 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8433 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8437 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8439 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8440 03.16.45.jpg',
 ];
 
 const FEATURE_IMAGES = [
-  'images/apple-tree-tots-images/IMG_8434 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8441 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8443 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8434 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8441 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8443 03.16.45.jpg',
 ];
 
 const FEATURE_IMAGES_2 = [
-  'images/apple-tree-tots-images/IMG_8435 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8444 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8445 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8435 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8444 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8445 03.16.45.jpg',
 ];
 
 const FEATURE_IMAGES_3 = [
-  'images/apple-tree-tots-images/IMG_8436 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8454 03.16.45.jpg',
-  'images/apple-tree-tots-images/IMG_8456 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8436 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8454 03.16.45.jpg',
+  '/images/apple-tree-tots-images/IMG_8456 03.16.45.jpg',
 ];
 
 const HERO_CONTENT = [

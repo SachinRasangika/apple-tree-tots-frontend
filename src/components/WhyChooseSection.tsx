@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { GraduationCap, Users, Globe, Heart, Shield, Sparkles } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
 interface FeatureProps {
@@ -32,6 +32,20 @@ function FeatureCard({
     </div>;
 }
 export function WhyChooseSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
   const features = [{
     icon: <GraduationCap size={24} />,
     title: 'Qualified ECE Educators',
@@ -68,7 +82,22 @@ export function WhyChooseSection() {
         {/* Left: Image */}
         <div className="lg:col-span-5 relative">
           <div className="aspect-[3/4] overflow-hidden rounded-lg relative group">
-            <img src="/apple-tree-tots/images/hero/Gemini_Generated_Image_wqpza0wqpza0wqpz.png" alt="Teacher with children" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
+            <video ref={videoRef} src={encodeURI("/images/apple-tree-tots-images/IMG_8854.MOV")} className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" loop playsInline />
+
+            {/* Play/Pause Button */}
+            <button onClick={togglePlayPause} className="absolute inset-0 flex items-center justify-center group/btn hover:bg-black/20 transition-all duration-300">
+              <div className="bg-[#2A372F]/80 hover:bg-[#2A372F] rounded-full p-4 transition-all duration-300 transform hover:scale-110">
+                {isPlaying ? (
+                  <svg className="w-8 h-8 text-[#CDD1CB]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+                  </svg>
+                ) : (
+                  <svg className="w-8 h-8 text-[#CDD1CB]" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z" />
+                  </svg>
+                )}
+              </div>
+            </button>
 
             {/* Floating stat card */}
             <div className="absolute bottom-8 right-8 bg-[#CDD1CB]/95 border border-[#2A372F]/20 rounded-2xl p-6 z-20 shadow-lg">

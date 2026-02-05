@@ -18,7 +18,7 @@ export function PageHeroSection({ title, description, imageUrl, imageAlt, button
       <div className="flex gap-8 items-start mb-12 justify-between">
         {/* Title and Description */}
         <div className="flex-1">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold text-[#2A372F] mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif tracking-widest uppercase text-[#2A372F] mb-6 leading-tight">
             {title}
           </h1>
           <div className="w-12 h-1 bg-gradient-to-r from-[#2d5555] to-transparent mb-8"></div>
@@ -61,7 +61,7 @@ export function PageHeroSection({ title, description, imageUrl, imageAlt, button
       {/* Hero Image */}
       <div className="relative h-[400px] md:h-[500px] overflow-hidden rounded-lg group">
         <img
-          src={imageUrl}
+          src={encodeURI(imageUrl)}
           alt={imageAlt}
           className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
         />

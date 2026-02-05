@@ -29,7 +29,7 @@ export function Navigation({ bannerVisible = true }: NavigationProps) {
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 flex justify-between items-center">
         {/* Logo */}
         <button onClick={() => navigate('/')} className="cursor-pointer hover:opacity-80 transition-opacity">
-          <img src="/apple-tree-tots/images/apple-tree-tots-images/logo1.png" alt="Apple Tree Tots Logo" className="h-16 w-auto" />
+          <img src="/images/apple-tree-tots-images/logo1.png" alt="Apple Tree Tots Logo" className="h-16 w-auto" />
         </button>
 
         {/* Desktop Menu */}

@@ -85,7 +85,7 @@ export function CoastalEnvironmentSection() {
         {/* Image Banner */}
         <div className="mt-16 relative h-[300px] md:h-[400px] overflow-hidden border border-white/10 group">
           <div className="absolute inset-0 bg-[#1a3a3a]/30 group-hover:bg-[#1a3a3a]/10 transition-colors duration-700 z-10" />
-          <img src="/apple-tree-tots/images/gallery/Gemini_Generated_Image_wqpza0wqpza0wqpz.png" alt="Children playing outdoors in Ahangama" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
+          <img src={encodeURI("/images/gallery/Gemini_Generated_Image_wqpza0wqpza0wqpz.png")} alt="Children playing outdoors in Ahangama" className="w-full h-full object-cover transition-all duration-700 transform group-hover:scale-105" />
           <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#152e2e] to-transparent p-8 z-20">
             <p className="text-xs tracking-widest uppercase text-white/80">
               Outdoor Learning Spaces • Ahangama, Galle District
