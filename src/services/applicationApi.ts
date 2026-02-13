@@ -198,15 +198,92 @@ export const submitWebsiteApplication = async (formData: any) => {
   }
 };
 
-// Update application status
-export const updateApplicationStatus = async (id: string, status: 'pending' | 'approved' | 'rejected', notes?: string) => {
+// Create application with Supabase URLs (Option A - frontend direct upload)
+export const submitWebsiteApplicationWithSupabaseUrls = async (formData: any) => {
+  try {
+    // Validate required fields before submission
+    const requiredFields = {
+      childFullName: 'Child Full Name',
+      parent1Name: 'Parent Name',
+      parent1Email: 'Parent Email',
+      parent1Mobile: 'Parent Mobile',
+      programType: 'Program Type',
+    };
+
+    const missingFields: string[] = [];
+    for (const [field, label] of Object.entries(requiredFields)) {
+      if (!formData[field]) {
+        missingFields.push(label);
+      }
+    }
+
+    if (missingFields.length > 0) {
+      throw new Error(`Please fill in: ${missingFields.join(', ')}`);
+    }
+
+    // Validate file URLs are present
+    const fileFields = {
+      birthCertificate: 'Birth Certificate',
+      childPhoto: 'Child Photo',
+      parentNICs: 'Parent NICs',
+      immunizationRecord: 'Immunization Record',
+      paymentReceipt: 'Payment Receipt',
+    };
+
+    const missingFiles: string[] = [];
+    for (const [field, label] of Object.entries(fileFields)) {
+      if (!formData.documents || !formData.documents[field] || formData.documents[field].length === 0) {
+        missingFiles.push(label);
+      }
+    }
+
+    if (missingFiles.length > 0) {
+      throw new Error(`Failed to upload or missing files: ${missingFiles.join(', ')}`);
+    }
+
+    console.log('Submitting application with documents:', {
+      childFullName: formData.childFullName,
+      documentsKeys: Object.keys(formData.documents || {}),
+      documentCounts: Object.entries(formData.documents || {}).reduce((acc, [key, val]: any) => {
+        acc[key] = Array.isArray(val) ? val.length : 0;
+        return acc;
+      }, {} as any)
+    });
+
+    // Send as JSON with URLs instead of FormData
+    const response = await fetch(`${API_BASE_URL}/applications`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('Server error response:', errorData);
+      throw new Error(errorData.message || `Failed to submit application (Status: ${response.status})`);
+    }
+
+    const successData = await response.json();
+    console.log('Application submitted successfully:', successData);
+    return successData;
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('Error submitting website application with Supabase URLs:', errorMessage);
+    throw error;
+  }
+};
+
+// Update application
+export const updateApplication = async (id: string, data: any) => {
   try {
     const response = await fetch(`${API_BASE_URL}/applications/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ status, notes }),
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {
@@ -219,6 +296,11 @@ export const updateApplicationStatus = async (id: string, status: 'pending' | 'a
     console.error('Error updating application:', error);
     throw error;
   }
+};
+
+// Update application status (legacy/convenience)
+export const updateApplicationStatus = async (id: string, status: 'pending' | 'approved' | 'rejected', notes?: string) => {
+  return updateApplication(id, { status, notes });
 };
 
 // Delete application

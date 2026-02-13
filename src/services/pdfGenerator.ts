@@ -104,18 +104,21 @@ export const generateApplicationPDF = async (application: Application) => {
       }
       .header {
         display: flex;
+        flex-direction: column;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         margin-bottom: 30px;
         border-bottom: 3px solid ${THEME_COLOR};
         padding-bottom: 20px;
+        text-align: center;
       }
       .logo {
-        max-width: 80px;
+        max-width: 40px;
         height: auto;
+        margin-bottom: 12px;
       }
       .header-info {
-        text-align: right;
+        text-align: center;
       }
       .title {
         font-size: 28px;
@@ -500,23 +503,26 @@ export const generateApplicationSubmissionPDF = async (formData: any) => {
       /* Header Section */
       .header-section {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
         margin-bottom: 35px;
         padding-bottom: 20px;
         border-bottom: 2px solid ${BG_LIGHT};
+        text-align: center;
       }
       .logo-container {
         flex-shrink: 0;
+        margin-bottom: 12px;
       }
       .logo-container img {
-        height: 60px;
+        height: 35px;
         width: auto;
         object-fit: contain;
       }
       .header-right {
         flex: 1;
-        margin-left: 40px;
+        margin-left: 0;
       }
       .header-title {
         font-size: 28px;

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, FileText, Settings, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FileText, Settings, LogOut, Menu, X, Image } from 'lucide-react';
 
 export function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,6 +50,15 @@ export function Sidebar() {
           </NavLink>
 
           <NavLink
+            to="/admin/gallery"
+            onClick={() => setIsOpen(false)}
+            className={({ isActive }) => `flex items-center gap-3 px-4 py-3 border-b border-white/5 transition ${isActive ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white'}`}
+          >
+            <Image size={18} />
+            <span className="text-sm">Gallery</span>
+          </NavLink>
+
+          <NavLink
             to="/admin/settings"
             onClick={() => setIsOpen(false)}
             className={({ isActive }) => `flex items-center gap-3 px-4 py-3 border-b border-white/5 transition ${isActive ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white'}`}
@@ -87,6 +96,14 @@ export function Sidebar() {
           >
             <FileText size={18} />
             <span className="text-sm">Applications</span>
+          </NavLink>
+
+          <NavLink
+            to="/admin/gallery"
+            className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded transition ${isActive ? 'bg-white/10 text-white' : 'text-white/70 hover:text-white'}`}
+          >
+            <Image size={18} />
+            <span className="text-sm">Gallery</span>
           </NavLink>
 
           <NavLink

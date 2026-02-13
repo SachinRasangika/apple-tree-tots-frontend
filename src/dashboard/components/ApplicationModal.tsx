@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { X, Download } from 'lucide-react';
 import { Button } from '../../components/ui/Button';
 import { fetchApplicationById } from '../../services/applicationApi';
+import { uploadToSupabase } from '../../services/supabaseService';
+import { DocumentCard } from './DocumentCard';
 
 interface DocumentFile {
   fileName?: string;
@@ -16,6 +18,7 @@ interface Documents {
   childPhoto?: DocumentFile;
   parentNICs?: DocumentFile;
   immunizationRecord?: DocumentFile;
+  paymentReceipt?: DocumentFile;
 }
 
 interface Application {
@@ -75,6 +78,9 @@ export function ApplicationModal({
   const [formData, setFormData] = useState<Application | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+  const [editingDocument, setEditingDocument] = useState<string | null>(null);
+  const [uploadingDocument, setUploadingDocument] = useState<string | null>(null);
 
   useEffect(() => {
     if (application && isOpen) {
@@ -115,6 +121,116 @@ export function ApplicationModal({
         setIsSaving(false);
       }
     }
+  };
+
+  const handleDocumentUpload = async (docType: string, file: File) => {
+    if (!formData) return;
+
+    try {
+      setUploadingDocument(docType);
+      const bucket = docType === 'childPhoto' ? 'images' : 'documents';
+
+      const result = await uploadToSupabase({
+        bucket,
+        file,
+        folder: docType,
+      });
+
+      if (result.success && result.url) {
+        const updatedDocuments = formData.documents || {};
+        updatedDocuments[docType as keyof Documents] = {
+          fileName: file.name,
+          fileUrl: result.url,
+          filePath: result.path,
+          uploadedAt: new Date().toISOString(),
+          size: file.size,
+        };
+
+        setFormData({
+          ...formData,
+          documents: updatedDocuments,
+        });
+
+        alert('Document updated successfully');
+      } else {
+        alert(`Failed to upload document: ${result.error}`);
+        throw new Error(result.error);
+      }
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      throw error;
+    } finally {
+      setUploadingDocument(null);
+    }
+  };
+
+  const downloadDocument = (fileUrl: string, fileName: string) => {
+    const a = document.createElement('a');
+    a.href = fileUrl;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  const getDocument = (docType: keyof Documents | string) => {
+    const data = formData;
+    if (!data) return null;
+
+    let doc: any = null;
+
+    // 1. Check in documents object (primary location)
+    if (data.documents && typeof data.documents === 'object') {
+      doc = (data.documents as any)[docType];
+      if (doc && (doc.fileUrl || doc.url)) {
+        return {
+          ...doc,
+          fileUrl: doc.fileUrl || doc.url,
+          fileName: doc.fileName || doc.name || (doc.fileUrl || doc.url)?.split('/').pop()
+        };
+      }
+    }
+
+    // 2. Check in uploadedDocuments object (secondary location)
+    if ((data as any).uploadedDocuments && typeof (data as any).uploadedDocuments === 'object') {
+      doc = (data as any).uploadedDocuments[docType];
+      if (doc && (doc.fileUrl || doc.url)) {
+        return {
+          ...doc,
+          fileUrl: doc.fileUrl || doc.url,
+          fileName: doc.fileName || doc.name || (doc.fileUrl || doc.url)?.split('/').pop()
+        };
+      }
+    }
+
+    // 3. Check at root level (backward compatibility)
+    const rootDoc = (data as any)[docType];
+    if (rootDoc) {
+      if (Array.isArray(rootDoc) && rootDoc.length > 0) {
+        const first = rootDoc[0];
+        if (first && (first.url || first.fileUrl)) {
+          return {
+            fileUrl: first.url || first.fileUrl,
+            fileName: first.fileName || first.name || (first.url || first.fileUrl)?.split('/').pop(),
+            uploadedAt: first.uploadedAt || first.createdAt,
+            size: first.size,
+            filePath: first.path || first.filePath
+          };
+        }
+      } else if (typeof rootDoc === 'object' && rootDoc !== null) {
+        if (rootDoc.fileUrl || rootDoc.url) {
+          return {
+            fileUrl: rootDoc.fileUrl || rootDoc.url,
+            fileName: rootDoc.fileName || rootDoc.name || (rootDoc.fileUrl || rootDoc.url)?.split('/').pop(),
+            uploadedAt: rootDoc.uploadedAt || rootDoc.createdAt,
+            size: rootDoc.size,
+            filePath: rootDoc.path || rootDoc.filePath
+          };
+        }
+      }
+    }
+
+    return null;
   };
 
   const childName = formData.childFullName || formData.childName || 'N/A';
@@ -187,14 +303,14 @@ export function ApplicationModal({
                 </label>
                 {mode === 'edit' ? (
                   <select
-                    value={formData.childGender || ''}
+                    value={formData.childGender?.toLowerCase() || ''}
                     onChange={(e) => handleChange('childGender', e.target.value)}
                     className="w-full bg-[#2d5555]/30 border border-white/20 rounded px-3 py-2 text-white text-sm"
                   >
                     <option value="">Select</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
                   </select>
                 ) : (
                   <p className="text-white">{formData.childGender || 'N/A'}</p>
@@ -302,14 +418,18 @@ export function ApplicationModal({
                   Program Type
                 </label>
                 {mode === 'edit' ? (
-                  <input
-                    type="text"
+                  <select
                     value={formData.programType || formData.program || ''}
                     onChange={(e) =>
                       handleChange('programType', e.target.value)
                     }
                     className="w-full bg-[#2d5555]/30 border border-white/20 rounded px-3 py-2 text-white text-sm"
-                  />
+                  >
+                    <option value="">Select Program</option>
+                    <option value="toddler">Toddler</option>
+                    <option value="casa">CASA</option>
+                    <option value="preschool">Preschool</option>
+                  </select>
                 ) : (
                   <p className="text-white">{program}</p>
                 )}
@@ -372,152 +492,103 @@ export function ApplicationModal({
             </div>
           )}
 
+          {/* Images Section */}
+          {(getDocument('childPhoto') || getDocument('birthCertificate') || getDocument('parentNICs') || mode === 'edit') && (
+            <div className="mb-8">
+              <h3 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-white/10">
+                Uploaded Images
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <DocumentCard
+                  label="Child Photo"
+                  icon="📷"
+                  document={getDocument('childPhoto')}
+                  docType="childPhoto"
+                  mode={mode}
+                  onImageClick={setLightboxImage}
+                  onDownload={downloadDocument}
+                  onUpload={handleDocumentUpload}
+                  isUploading={uploadingDocument === 'childPhoto'}
+                />
+                <DocumentCard
+                  label="Birth Certificate"
+                  icon="📄"
+                  document={getDocument('birthCertificate')}
+                  docType="birthCertificate"
+                  mode={mode}
+                  onImageClick={setLightboxImage}
+                  onDownload={downloadDocument}
+                  onUpload={handleDocumentUpload}
+                  isUploading={uploadingDocument === 'birthCertificate'}
+                />
+                <DocumentCard
+                  label="Parent NICs"
+                  icon="🆔"
+                  document={getDocument('parentNICs')}
+                  docType="parentNICs"
+                  mode={mode}
+                  onImageClick={setLightboxImage}
+                  onDownload={downloadDocument}
+                  onUpload={handleDocumentUpload}
+                  isUploading={uploadingDocument === 'parentNICs'}
+                />
+              </div>
+            </div>
+          )}
+
           {/* Documents Section */}
-          {(formData.documents || formData.uploadedDocuments) && (
+          {(getDocument('immunizationRecord') || getDocument('paymentReceipt') || mode === 'edit') && (
             <div>
               <h3 className="text-lg font-semibold text-white mb-4 pb-2 border-b border-white/10">
                 Uploaded Documents
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Birth Certificate */}
-                {(formData.documents?.birthCertificate || formData.uploadedDocuments?.birthCertificate) && (
-                  <div className="border border-white/10 rounded p-4 bg-[#2d5555]/20">
-                    <h4 className="text-sm font-semibold text-white mb-3">Birth Certificate</h4>
-                    {formData.documents?.birthCertificate?.fileUrl && (
-                      <>
-                        {formData.documents.birthCertificate.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
-                          <img
-                            src={formData.documents.birthCertificate.fileUrl}
-                            alt="Birth Certificate"
-                            className="w-full h-48 object-cover rounded mb-3"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
-                          />
-                        ) : null}
-                        <a
-                          href={formData.documents.birthCertificate.fileUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition text-sm"
-                        >
-                          <Download size={14} />
-                          {formData.documents.birthCertificate.fileName || 'Download'}
-                        </a>
-                      </>
-                    )}
-                    {formData.uploadedDocuments?.birthCertificate && !formData.documents?.birthCertificate?.fileUrl && (
-                      <p className="text-white/60 text-sm">
-                        {formData.uploadedDocuments.birthCertificate.name || 'Birth Certificate uploaded'}
-                      </p>
-                    )}
-                  </div>
-                )}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <DocumentCard
+                  label="Immunization Record"
+                  icon="💉"
+                  document={getDocument('immunizationRecord')}
+                  docType="immunizationRecord"
+                  mode={mode}
+                  onImageClick={setLightboxImage}
+                  onDownload={downloadDocument}
+                  onUpload={handleDocumentUpload}
+                  isUploading={uploadingDocument === 'immunizationRecord'}
+                />
+                <DocumentCard
+                  label="Payment Receipt"
+                  icon="💳"
+                  document={getDocument('paymentReceipt')}
+                  docType="paymentReceipt"
+                  mode={mode}
+                  onImageClick={setLightboxImage}
+                  onDownload={downloadDocument}
+                  onUpload={handleDocumentUpload}
+                  isUploading={uploadingDocument === 'paymentReceipt'}
+                />
+              </div>
+            </div>
+          )}
 
-                {/* Child Photo */}
-                {(formData.documents?.childPhoto || formData.uploadedDocuments?.childPhoto) && (
-                  <div className="border border-white/10 rounded p-4 bg-[#2d5555]/20">
-                    <h4 className="text-sm font-semibold text-white mb-3">Child Photo</h4>
-                    {formData.documents?.childPhoto?.fileUrl && (
-                      <>
-                        {formData.documents.childPhoto.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
-                          <img
-                            src={formData.documents.childPhoto.fileUrl}
-                            alt="Child Photo"
-                            className="w-full h-48 object-cover rounded mb-3"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
-                          />
-                        ) : null}
-                        <a
-                          href={formData.documents.childPhoto.fileUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition text-sm"
-                        >
-                          <Download size={14} />
-                          {formData.documents.childPhoto.fileName || 'Download'}
-                        </a>
-                      </>
-                    )}
-                    {formData.uploadedDocuments?.childPhoto && !formData.documents?.childPhoto?.fileUrl && (
-                      <p className="text-white/60 text-sm">
-                        {formData.uploadedDocuments.childPhoto.name || 'Photo uploaded'}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* Parent NICs */}
-                {(formData.documents?.parentNICs || formData.uploadedDocuments?.parentNICs) && (
-                  <div className="border border-white/10 rounded p-4 bg-[#2d5555]/20">
-                    <h4 className="text-sm font-semibold text-white mb-3">Parent NICs</h4>
-                    {formData.documents?.parentNICs?.fileUrl && (
-                      <>
-                        {formData.documents.parentNICs.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
-                          <img
-                            src={formData.documents.parentNICs.fileUrl}
-                            alt="Parent NICs"
-                            className="w-full h-48 object-cover rounded mb-3"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
-                          />
-                        ) : null}
-                        <a
-                          href={formData.documents.parentNICs.fileUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition text-sm"
-                        >
-                          <Download size={14} />
-                          {formData.documents.parentNICs.fileName || 'Download'}
-                        </a>
-                      </>
-                    )}
-                    {formData.uploadedDocuments?.parentNICs && !formData.documents?.parentNICs?.fileUrl && (
-                      <p className="text-white/60 text-sm">
-                        {formData.uploadedDocuments.parentNICs.name || 'NIC uploaded'}
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                {/* Immunization Record */}
-                {(formData.documents?.immunizationRecord || formData.uploadedDocuments?.immunizationRecord) && (
-                  <div className="border border-white/10 rounded p-4 bg-[#2d5555]/20">
-                    <h4 className="text-sm font-semibold text-white mb-3">Immunization Record</h4>
-                    {formData.documents?.immunizationRecord?.fileUrl && (
-                      <>
-                        {formData.documents.immunizationRecord.fileUrl.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? (
-                          <img
-                            src={formData.documents.immunizationRecord.fileUrl}
-                            alt="Immunization Record"
-                            className="w-full h-48 object-cover rounded mb-3"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
-                          />
-                        ) : null}
-                        <a
-                          href={formData.documents.immunizationRecord.fileUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition text-sm"
-                        >
-                          <Download size={14} />
-                          {formData.documents.immunizationRecord.fileName || 'Download'}
-                        </a>
-                      </>
-                    )}
-                    {formData.uploadedDocuments?.immunizationRecord && !formData.documents?.immunizationRecord?.fileUrl && (
-                      <p className="text-white/60 text-sm">
-                        {formData.uploadedDocuments.immunizationRecord.name || 'Record uploaded'}
-                      </p>
-                    )}
-                  </div>
-                )}
+          {/* Lightbox Modal */}
+          {lightboxImage && (
+            <div
+              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+              onClick={() => setLightboxImage(null)}
+            >
+              <div className="max-w-4xl max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+                <div className="flex justify-end mb-3">
+                  <button
+                    onClick={() => setLightboxImage(null)}
+                    className="p-2 hover:bg-white/10 rounded transition"
+                  >
+                    <X size={24} className="text-white" />
+                  </button>
+                </div>
+                <img
+                  src={lightboxImage}
+                  alt="Document Preview"
+                  className="w-full h-auto max-h-[80vh] object-contain rounded"
+                />
               </div>
             </div>
           )}

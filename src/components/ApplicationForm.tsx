@@ -1,8 +1,9 @@
 import React, { useState, Fragment } from 'react';
 import { Button } from './ui/Button';
 import { Check, ChevronRight } from 'lucide-react';
-import { submitWebsiteApplication } from '../services/applicationApi';
+import { submitWebsiteApplication, submitWebsiteApplicationWithSupabaseUrls } from '../services/applicationApi';
 import { generateApplicationSubmissionPDF } from '../services/pdfGenerator';
+import { uploadMultipleFiles } from '../services/supabaseService';
 
 interface ApplicationFormProps {
   onSubmitSuccess?: () => void;
@@ -178,11 +179,72 @@ export function ApplicationForm({ onSubmitSuccess, submittedBy = 'website' }: Ap
       setSubmitError(null);
 
       try {
+        // Upload all files to Supabase and collect URLs
+        const uploadedFiles: any = {};
+
+        const fileFields = [
+          'birthCertificate',
+          'childPhoto',
+          'parentNICs',
+          'immunizationRecord',
+          'paymentReceipt'
+        ];
+
+        for (const field of fileFields) {
+          if (formData[field] && formData[field].length > 0) {
+            const bucket = field === 'childPhoto' ? 'images' : 'documents';
+            const results = await uploadMultipleFiles(formData[field], bucket, field);
+
+            if (results.some(r => !r.success)) {
+              const failedCount = results.filter(r => !r.success).length;
+              throw new Error(`Failed to upload ${field}: ${failedCount} file(s)`);
+            }
+
+            uploadedFiles[field] = results.map(r => ({ url: r.url, path: r.path }));
+          }
+        }
+
+        // Create submission data with URLs instead of Files
+        // Wrap documents in a 'documents' object so the backend recognizes them as Supabase uploads
         const submissionData = {
-          ...formData,
+          // All form fields EXCEPT the file fields
+          childFullName: formData.childFullName,
+          childDOB: formData.childDOB,
+          childGender: formData.childGender,
+          childNationality: formData.childNationality,
+          homeAddress: formData.homeAddress,
+          languageAtHome: formData.languageAtHome,
+          parent1Name: formData.parent1Name,
+          parent1NIC: formData.parent1NIC,
+          parent1Mobile: formData.parent1Mobile,
+          parent1Email: formData.parent1Email,
+          parent2Name: formData.parent2Name,
+          parent2NIC: formData.parent2NIC,
+          parent2Mobile: formData.parent2Mobile,
+          programType: formData.programType,
+          programLevel: formData.programLevel,
+          immunizationUpToDate: formData.immunizationUpToDate,
+          medicalConditions: formData.medicalConditions,
+          emergencyContact1Name: formData.emergencyContact1Name,
+          emergencyContact1Phone: formData.emergencyContact1Phone,
+          emergencyContact2Name: formData.emergencyContact2Name,
+          emergencyContact2Phone: formData.emergencyContact2Phone,
+          authorizedPickupPersons: formData.authorizedPickupPersons,
+          termsAgreed: formData.termsAgreed,
+          medicalConsentAgreed: formData.medicalConsentAgreed,
           submittedBy: submittedBy,
+          // Wrap all document URLs in a 'documents' object so backend recognizes Supabase uploads
+          documents: {
+            birthCertificate: uploadedFiles.birthCertificate || [],
+            childPhoto: uploadedFiles.childPhoto || [],
+            parentNICs: uploadedFiles.parentNICs || [],
+            immunizationRecord: uploadedFiles.immunizationRecord || [],
+            paymentReceipt: uploadedFiles.paymentReceipt || [],
+          }
         };
-        await submitWebsiteApplication(submissionData);
+
+        // Use the new function that sends JSON with Supabase URLs
+        await submitWebsiteApplicationWithSupabaseUrls(submissionData);
         setShowTermsPopup(false);
 
         // Store the application data and show success popup
@@ -194,9 +256,17 @@ export function ApplicationForm({ onSubmitSuccess, submittedBy = 'website' }: Ap
           onSubmitSuccess?.();
         }
       } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Failed to submit application';
+        let errorMessage = 'Failed to submit application';
+
+        if (error instanceof Error) {
+          errorMessage = error.message;
+        } else if (typeof error === 'object' && error !== null && 'message' in error) {
+          errorMessage = (error as any).message;
+        }
+
+        console.error('Application submission error:', error);
         setSubmitError(errorMessage);
-        alert(`Error: ${errorMessage}`);
+        alert(`Error submitting application:\n\n${errorMessage}\n\nPlease check your internet connection and try again.`);
       } finally {
         setIsSubmitting(false);
       }

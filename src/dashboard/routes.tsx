@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { ApplicationsPage } from './pages/ApplicationsPage';
+import { ApplicationDetailsPage } from './pages/ApplicationDetailsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { GalleryPage } from './pages/GalleryPage';
 import { DashboardLayout } from './layouts/DashboardLayout';
 import { ApplicationForm } from '../components/ApplicationForm';
 
@@ -32,6 +34,14 @@ const dashboardRoutes: RouteObject[] = [
   {
     path: 'applications/new',
     element: <DashboardLayout><DashboardApplicationForm /></DashboardLayout>,
+  },
+  {
+    path: 'applications/:id',
+    element: <DashboardLayout><ApplicationDetailsPage /></DashboardLayout>,
+  },
+  {
+    path: 'gallery',
+    element: <DashboardLayout><GalleryPage /></DashboardLayout>,
   },
   {
     path: 'settings',
