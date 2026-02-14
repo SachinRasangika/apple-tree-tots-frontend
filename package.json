@@ -11,6 +11,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.95.3",
     "clsx": "latest",
     "html2pdf.js": "^0.14.0",
     "lucide-react": "0.522.0",
