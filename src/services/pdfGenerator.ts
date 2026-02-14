@@ -829,14 +829,24 @@ export const generateApplicationSubmissionPDF = async (formData: any) => {
       <!-- Program Enrollment -->
       <div class="section">
         <div class="section-header">Program Enrollment</div>
-        <div class="grid-2">
+        <div class="grid-full">
           <div class="field">
-            <span class="field-label">Program Type</span>
-            <span class="field-value">${formData.programType.charAt(0).toUpperCase() + formData.programType.slice(1)}</span>
-          </div>
-          <div class="field">
-            <span class="field-label">Schedule Type</span>
-            <span class="field-value">${formData.programLevel}</span>
+            <span class="field-label">Selected Program Plan</span>
+            <span class="field-value">${(() => {
+              const programMap: { [key: string]: string } = {
+                'preschool-1m': 'Preschool Program - 1 Month (USD 450 ≈ LKR 139,500)',
+                'preschool-3m': 'Preschool Program - 3 Months (USD 385 ≈ LKR 119,350 per month)',
+                'preschool-6m': 'Preschool Program - 6 Months (USD 330 ≈ LKR 102,300 per month)',
+                'preschool-year': 'Preschool Program - Full School Year (USD 300 ≈ LKR 93,000 per month)',
+                'daycare-monthly': 'Daycare Services - Monthly (USD 300 ≈ LKR 93,000)',
+                'daycare-weekly': 'Daycare Services - Weekly (USD 100 ≈ LKR 31,000)',
+                'daycare-hourly': 'Daycare Services - Hourly (USD 10 ≈ LKR 3,100)',
+                'daycare-3hours': 'Daycare Services - More than 3 hours (USD 8 ≈ LKR 2,480 per hour)',
+                'toddler': 'Toddler Program',
+                'casa': 'CASA Program'
+              };
+              return programMap[formData.programType] || formData.programType;
+            })()}</span>
           </div>
         </div>
       </div>

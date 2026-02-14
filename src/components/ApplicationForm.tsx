@@ -127,12 +127,16 @@ export function ApplicationForm({ onSubmitSuccess, submittedBy = 'website' }: Ap
       if (submitError) {
         setSubmitError(null);
       }
+      // Scroll to top of form
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
+      // Scroll to top of form
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -442,40 +446,90 @@ export function ApplicationForm({ onSubmitSuccess, submittedBy = 'website' }: Ap
         {/* Step 3: Program Enrollment */}
         {currentStep === 3 && <div className="space-y-6 animate-[fadeIn_0.5s_ease-out]">
             <div>
-              <h3 className="text-2xl font-serif tracking-wide mb-6 text-[#2A372F]">
+              <h3 className="text-2xl font-serif tracking-wide mb-2 text-[#2A372F]">
                 Section C: Program Enrollment
               </h3>
+              <p className="text-sm text-[#2A372F]/70 font-light mb-6">Please select your preferred program and pricing plan</p>
             </div>
 
-            <div>
-              <label className="block text-xs tracking-widest uppercase mb-2 text-[#2A372F] font-semibold">
-                Select Program Type *
-              </label>
-              <select required value={formData.programType} onChange={e => updateFormData('programType', e.target.value)} className="w-full bg-[#2d5555] border-b border-[#2A372F]/40 px-3 py-3 text-sm text-white focus:outline-none focus:border-[#2A372F] transition-colors">
-                <option value="">Select program</option>
-                <option value="toddler">Toddler Programs</option>
-                <option value="casa">CASA Programs</option>
-              </select>
+            {/* Preschool Program */}
+            <div className="border-2 border-[#2A372F]/20 rounded-lg p-6 mb-8">
+              <h4 className="text-lg font-serif text-[#2A372F] mb-1">Preschool Program</h4>
+              <p className="text-sm text-[#2A372F]/60 mb-4 font-light">Select your enrollment plan:</p>
+
+              <div className="space-y-3">
+                <label className="flex items-center gap-4 cursor-pointer p-4 border border-[#2A372F]/20 rounded-lg hover:bg-[#2A372F]/5 transition-colors" onClick={() => { updateFormData('programType', 'preschool-1m'); updateFormData('programLevel', '1month'); }}>
+                  <input type="radio" name="program" required value="preschool-1m" checked={formData.programType === 'preschool-1m'} onChange={e => { updateFormData('programType', 'preschool-1m'); updateFormData('programLevel', '1month'); }} className="w-4 h-4 accent-[#2d5555]" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#2A372F]">1 Month – USD 450 (≈ LKR 139,500)</p>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-4 cursor-pointer p-4 border border-[#2A372F]/20 rounded-lg hover:bg-[#2A372F]/5 transition-colors" onClick={() => { updateFormData('programType', 'preschool-3m'); updateFormData('programLevel', '3months'); }}>
+                  <input type="radio" name="program" required value="preschool-3m" checked={formData.programType === 'preschool-3m'} onChange={e => { updateFormData('programType', 'preschool-3m'); updateFormData('programLevel', '3months'); }} className="w-4 h-4 accent-[#2d5555]" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#2A372F]">3 Months – USD 385 (≈ LKR 119,350) per month</p>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-4 cursor-pointer p-4 border border-[#2A372F]/20 rounded-lg hover:bg-[#2A372F]/5 transition-colors" onClick={() => { updateFormData('programType', 'preschool-6m'); updateFormData('programLevel', '6months'); }}>
+                  <input type="radio" name="program" required value="preschool-6m" checked={formData.programType === 'preschool-6m'} onChange={e => { updateFormData('programType', 'preschool-6m'); updateFormData('programLevel', '6months'); }} className="w-4 h-4 accent-[#2d5555]" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#2A372F]">6 Months – USD 330 (≈ LKR 102,300) per month</p>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-4 cursor-pointer p-4 border border-[#2A372F]/20 rounded-lg hover:bg-[#2A372F]/5 transition-colors" onClick={() => { updateFormData('programType', 'preschool-year'); updateFormData('programLevel', 'fullschoolyear'); }}>
+                  <input type="radio" name="program" required value="preschool-year" checked={formData.programType === 'preschool-year'} onChange={e => { updateFormData('programType', 'preschool-year'); updateFormData('programLevel', 'fullschoolyear'); }} className="w-4 h-4 accent-[#2d5555]" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#2A372F]">Full School Year – USD 300 (≈ LKR 93,000) per month</p>
+                  </div>
+                </label>
+              </div>
             </div>
 
-            {formData.programType && <div>
-              <label className="block text-xs tracking-widest uppercase mb-2 text-[#2A372F] font-semibold">
-                Schedule Type *
-              </label>
-              <select required value={formData.programLevel} onChange={e => updateFormData('programLevel', e.target.value)} className="w-full bg-[#2d5555] border-b border-[#2A372F]/40 px-3 py-3 text-sm text-white focus:outline-none focus:border-[#2A372F] transition-colors">
-                <option value="">Select schedule type</option>
-                {formData.programType === 'toddler' ? (
-                  <>
-                    <option value="half-day">Half-day (4 hours)</option>
-                    <option value="full-day">Full-day (Extended hours)</option>
-                  </>
-                ) : (
-                  <>
-                    <option value="half-day">Half-day (4 hours)</option>
-                    <option value="full-day">Full-day (Extended hours)</option>
-                  </>
-                )}
-              </select>
+            {/* Daycare Services */}
+            <div className="border-2 border-[#2A372F]/20 rounded-lg p-6">
+              <h4 className="text-lg font-serif text-[#2A372F] mb-1">Daycare Services</h4>
+              <p className="text-sm text-[#2A372F]/60 mb-4 font-light">Select your preferred service plan:</p>
+
+              <div className="space-y-3">
+                <label className="flex items-center gap-4 cursor-pointer p-4 border border-[#2A372F]/20 rounded-lg hover:bg-[#2A372F]/5 transition-colors" onClick={() => { updateFormData('programType', 'daycare-monthly'); updateFormData('programLevel', 'monthly'); }}>
+                  <input type="radio" name="program" required value="daycare-monthly" checked={formData.programType === 'daycare-monthly'} onChange={e => { updateFormData('programType', 'daycare-monthly'); updateFormData('programLevel', 'monthly'); }} className="w-4 h-4 accent-[#2d5555]" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#2A372F]">Monthly – USD 300 (≈ LKR 93,000)</p>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-4 cursor-pointer p-4 border border-[#2A372F]/20 rounded-lg hover:bg-[#2A372F]/5 transition-colors" onClick={() => { updateFormData('programType', 'daycare-weekly'); updateFormData('programLevel', 'weekly'); }}>
+                  <input type="radio" name="program" required value="daycare-weekly" checked={formData.programType === 'daycare-weekly'} onChange={e => { updateFormData('programType', 'daycare-weekly'); updateFormData('programLevel', 'weekly'); }} className="w-4 h-4 accent-[#2d5555]" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#2A372F]">Weekly – USD 100 (≈ LKR 31,000)</p>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-4 cursor-pointer p-4 border border-[#2A372F]/20 rounded-lg hover:bg-[#2A372F]/5 transition-colors" onClick={() => { updateFormData('programType', 'daycare-hourly'); updateFormData('programLevel', 'hourly'); }}>
+                  <input type="radio" name="program" required value="daycare-hourly" checked={formData.programType === 'daycare-hourly'} onChange={e => { updateFormData('programType', 'daycare-hourly'); updateFormData('programLevel', 'hourly'); }} className="w-4 h-4 accent-[#2d5555]" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#2A372F]">Hourly – USD 10 (≈ LKR 3,100)</p>
+                  </div>
+                </label>
+
+                <label className="flex items-center gap-4 cursor-pointer p-4 border border-[#2A372F]/20 rounded-lg hover:bg-[#2A372F]/5 transition-colors" onClick={() => { updateFormData('programType', 'daycare-3hours'); updateFormData('programLevel', 'moreThan3hours'); }}>
+                  <input type="radio" name="program" required value="daycare-3hours" checked={formData.programType === 'daycare-3hours'} onChange={e => { updateFormData('programType', 'daycare-3hours'); updateFormData('programLevel', 'moreThan3hours'); }} className="w-4 h-4 accent-[#2d5555]" />
+                  <div className="flex-1">
+                    <p className="text-sm font-semibold text-[#2A372F]">More than 3 hours – USD 8 (≈ LKR 2,480) per hour</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            {/* Selection Summary */}
+            {formData.programType && <div className="bg-[#2d5555]/10 border border-[#2d5555]/20 rounded-lg p-4 mt-6">
+              <p className="text-xs uppercase tracking-widest text-[#2A372F]/60 font-semibold mb-2">Selected Plan:</p>
+              <p className="text-sm text-[#2A372F] font-medium capitalize">
+                {formData.programType.replace(/-/g, ' ')}
+              </p>
             </div>}
           </div>}
 
